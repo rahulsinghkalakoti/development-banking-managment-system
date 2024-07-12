@@ -2,7 +2,7 @@
 #include <stdbool.h>  
 #include <string.h>   
 
-//this code is made by us
+
 int validateTaskNumber(int task);
 void createAccount(long long int *account_no, char name[], int *balance);
 void deposit(long long int account_no, int *balance);
