@@ -90,12 +90,12 @@ void createAccount(long long int *account_no, char name[], int *balance)
      while (!isAccountValid(*account_no));
 
     printf("Please enter your account holder name: ");
-    scanf("%s", name);
+    scanf(" %s", &name);
 
     do
      {
         printf("Please enter balance (Opening account should be 500 minimum): ");
-        scanf("%d", balance);
+        scanf("%d", &balance);
     }
      while (*balance < 500);
 
