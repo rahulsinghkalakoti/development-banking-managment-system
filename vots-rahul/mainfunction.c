@@ -31,7 +31,7 @@ int main()
     while (exit != 0)
     {
         printf("\nPlease enter the task number: ");
-        scanf("%d", &taskInput);
+        scanf("%s", &taskInput);
          if (isNumeric(taskInput))
         {
             task = atoi(taskInput);
@@ -85,7 +85,7 @@ void createAccount(long long int *account_no, char name[], int *balance)
     scanf("%s", name);
     printf("Enter account number: ");
     scanf("%lld", account_no);
-    *balance = 0;  // Initialize balance to 0 for new account
+    *balance = 0;  
     printf("Account created successfully.\n");
 }
 
