@@ -1,16 +1,20 @@
 #include<stdio.h>
 #include<string.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
-
+int isdigit(int str);
+int aito(int tasknumber);
 int validateTaskNumber(int task);
 void createAccount(long long int *account_no, char name[], int *balance);
 void deposit(long long int account_no, int *balance);
 void withdraw(long long int account_no, int *balance);
 void checkBalance(long long int account_no, int balance);
 void displayAccountDetails(long long int account_no, char name[], int balance);
-
+int isNumeric(const char *str);
 int main()
-{
+{   
+    char taskInput[10];
     int task, exit = 1;
     int balance = 0;
     char name[20] = "";
@@ -27,8 +31,11 @@ int main()
     while (exit != 0)
     {
         printf("\nPlease enter the task number: ");
-        scanf("%d", &task);
-
+        scanf("%d", &taskInput);
+         if (isNumeric(taskInput))
+        {
+            task = atoi(taskInput);
+       
         if (validateTaskNumber(task))
         {
             switch (task)
@@ -57,6 +64,11 @@ int main()
         {
             printf("\nPlease enter a valid task number\n");
         }
+    }
+    else
+    {
+         printf("\nPlease enter a valid task number\n");
+    }
     }
     printf("You have left\n");
     return 0;
@@ -107,7 +119,17 @@ void checkBalance(long long int account_no, int balance)
     printf("Account Number: %lld\n", account_no);
     printf("Current Balance: %d\n", balance);
 }
-
+int isNumeric(const char *str)
+{
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        if (!isdigit(str[i]))
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
 void displayAccountDetails(long long int account_no, char name[], int balance)
 {
     printf("Account Number: %lld\n", account_no);
