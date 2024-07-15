@@ -1,3 +1,5 @@
+
+
 #include <stdio.h>
 
 
@@ -40,10 +42,16 @@ void withdraw(int *balance)
     printf("Enter withdrawal amount: ");
     scanf("%d", &withdrawAmount);
 
-    if (*balance >= withdrawAmount) {
+ if (withdrawAmount <= 0) {
+        printf("Invalid amount. Please enter a positive amount to withdraw.\n");
+       
+    }
+
+    if (*balance - withdrawAmount >= 10) {
         *balance -= withdrawAmount;
         printf("%d rupees debited from your bank account\n", withdrawAmount);
     } else {
-        printf("Insufficient balance in your account\n");
-    }
+        printf("You cannot withdraw %d rupees. Minimum balance should be 10 rupees.\n", withdrawAmount);
+        printf("Your current balance is: %d\n", *balance);
+}
 }

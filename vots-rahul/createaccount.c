@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <ctype.h>  
 
 void displayAccountDetails(long long int account_no, char *name, int balance);
 void createAccount(long long int *account_no, char *name, int *balance);
 
-int main() 
-{
+int main()
+ {
     long long int account_no = 0;
     char name[100];
     int balance = 0;
@@ -12,13 +13,13 @@ int main()
     if (account_no == 0)
      {
         createAccount(&account_no, name, &balance);
-    } 
-    else
-     {
+    }
+     else
+      {
         int press;
         printf("You already have an account\n");
-        printf("Press--1 for a new account \nPress--2 for account information \nPress--0 to exit\n");
-        printf("Press--");
+        printf("Press 1 for a new account\nPress 2 for account information\nPress 0 to exit\n");
+        printf("Press: ");
         scanf("%d", &press);
 
         if (press == 1)
@@ -26,12 +27,12 @@ int main()
             account_no = 0;
             createAccount(&account_no, name, &balance);
         }
-         else if (press == 2)
-          {
+        else if (press == 2)
+         {
             displayAccountDetails(account_no, name, balance);
         }
          else if (press == 0)
-          {
+         {
             printf("You are using the previous account\n");
         }
     }
@@ -46,24 +47,37 @@ void displayAccountDetails(long long int account_no, char *name, int balance)
     printf("Account Balance: %d\n", balance);
 }
 
-void createAccount(long long int *account_no, char *name, int *balance
-) {
-    do 
-    {
+void createAccount(long long int *account_no, char *name, int *balance)
+ {
+    do {
         printf("\nPlease enter 11 digit account number only: ");
         scanf("%lld", account_no);
-    }
-     while (*account_no <= 10000000000 || *account_no >= 100000000000);
+    } 
+    while (*account_no <= 10000000000 || *account_no >= 100000000000);
 
     printf("Please enter your account holder name: ");
     scanf("%s", name);
 
-    do
+   
+    int valid = 1;
+    for (int i = 0; name[i] != '\0'; i++)
      {
+        if (!isalpha(name[i])) {
+            valid = 0;
+            break;
+        }
+    }
+    if (!valid)
+     {
+        printf("Account holder name cannot contain numeric characters. Please enter a valid name.\n");
+        createAccount(account_no, name, balance);  
+        return; 
+    }
+
+    do {
         printf("Please enter balance (Opening account should be 500 minimum): ");
         scanf("%d", balance);
-    }
-     while (*balance < 500);
+    } while (*balance < 500);
 
     printf("\n\n*Thank you for joining India Bank*\nYour account details:\n");
     displayAccountDetails(*account_no, name, *balance);
