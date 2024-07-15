@@ -2,7 +2,8 @@
 #include <stdbool.h> 
 #include <string.h> 
 #include <stdlib.h>
-  
+#include <ctype.h>
+
 int isdigit(int str);
 int aito(int tasknumber);
 int validateTaskNumber(int task);
@@ -80,24 +81,37 @@ int validateTaskNumber(int task)
     return (task >= 0 && task <= 5);
 }
 
-void createAccount(long long int *account_no, char name[], int *balance)
+void createAccount(long long int *account_no, char *name, int *balance)
  {
-    do
-     {
+    do {
         printf("\nPlease enter 11 digit account number only: ");
         scanf("%lld", account_no);
-    }
-     while (!isAccountValid(*account_no));
+    } 
+    while (*account_no <= 10000000000 || *account_no >= 100000000000);
 
     printf("Please enter your account holder name: ");
-    scanf(" %s", &name);
+    scanf("%s", name);
 
-    do
+   
+    int valid = 1;
+    for (int i = 0; name[i] != '\0'; i++)
      {
-        printf("Please enter balance (Opening account should be 500 minimum): ");
-        scanf("%d", &balance);
+        if (!isalpha(name[i])) {
+            valid = 0;
+            break;
+        }
     }
-     while (*balance < 500);
+    if (!valid)
+     {
+        printf("Account holder name cannot contain numeric characters. Please enter a valid name.\n");
+        createAccount(account_no, name, balance);  
+        return; 
+    }
+
+    do {
+        printf("Please enter balance (Opening account should be 500 minimum): ");
+        scanf("%d", balance);
+    } while (*balance < 500);
 
     printf("\n\n*Thank you for joining India Bank*\nYour account details:\n");
     displayAccountDetails(*account_no, name, *balance);
@@ -114,18 +128,24 @@ void deposit(long long int account_no, int *balance)
 
 void withdraw(long long int account_no, int *balance)
  {
-    int amount;
-    printf("Enter amount to withdraw: ");
-    scanf("%d", &amount);
-    if (amount > *balance)
-     {
-        printf("Insufficient balance.\n");
-    } 
-    else
-     {
-        *balance -= amount;
-        printf("Amount withdrawn successfully. New balance: %d\n", *balance);
+     int withdrawAmount;
+
+    printf("Enter withdrawal amount: ");
+    scanf("%d", &withdrawAmount);
+
+ if (withdrawAmount <= 0) {
+        printf("Invalid amount. Please enter a positive amount to withdraw.\n");
+       
     }
+
+    if (*balance - withdrawAmount >= 10) {
+        *balance -= withdrawAmount;
+        printf("%d rupees debited from your bank account\n", withdrawAmount);
+        
+    } else {
+        printf("You cannot withdraw %d rupees. Minimum balance should be 10 rupees.\n", withdrawAmount);
+       
+}
 }
 
 void checkBalance(long long int account_no, int balance)
@@ -169,4 +189,3 @@ bool isAccountValid(long long int account_no)
  {
     return (account_no > 10000000000 && account_no < 100000000000);
 }
-// we made this code in 3 days
